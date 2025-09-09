@@ -13,20 +13,27 @@ A lightweight MVC framework built with PHP that includes database integration, e
 - PSR-4 autoloading
 
 ## Project Structure
+```
+project-root/
 ├── app/
-    ├── Controller/ # Controller classes
-    ├── Framework/ # Core framework classes
-    ├── Model/ # Model classes
-    ├── View/ # View templates
-    ├── config/ # Configuration files
-    ├── bootstrap.php # Application bootstrap
-    └── functions.php # Helper functions
-├── log/ # Log files
-├── public/ # Public assets
-├── vendor/ # Composer dependencies
-├── .env # Environment variables
-└── index.php # Application entry point
-
+│   ├── Controller/        # Controller classes
+│   ├── Framework/        # Core framework classes
+│   ├── Model/           # Model classes
+│   ├── View/            # View templates
+│   ├── config/          # Configuration files
+│   ├── bootstrap.php    # Application bootstrap
+│   └── functions.php    # Helper functions
+├── log/                 # Log files
+├── public/              # Public assets
+│   ├── css/            # CSS files
+│   ├── js/             # JavaScript files
+│   └── images/         # Image assets
+├── vendor/             # Composer dependencies
+├── .env                # Environment variables
+├── .env.sample         # Environment template
+├── composer.json       # Composer configuration
+└── index.php          # Application entry point
+```
 
 ## Environment Configuration
 Required environment variables:
