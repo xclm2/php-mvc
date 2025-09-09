@@ -4,7 +4,6 @@ namespace App\Framework\DB\Create;
 use App\Framework\DB;
 use App\Framework\DB\Create\Table;
 use App\Framework\DB\Table\Column\Type;
-use App\Logger;
 
 /**
  * Class Processor
@@ -25,6 +24,18 @@ class Processor
 
         foreach ($table->getColumns() as $column) {
             $query .= "{$column->getName()} {$column->getType()}";
+
+            if ($column->getLength()) {
+                $length = match($column->getType()) {
+                    Type::ENUM => is_array($column->getLength()) ? 
+                                    "'". implode("','", $column->getLength()) . "'": 
+                                    $column->getLength(),
+                    default => $column->getLength()
+                };
+
+                $query .= "($length)";
+            }
+
             if ($column->isPrimaryKey()) {
                 $query .= " PRIMARY KEY";
             }
@@ -46,8 +57,8 @@ class Processor
                 $query .= " NOT NULL";
             }
 
-            if ($column->getType() === Type::ENUM) {
-                $query .= " CHECK ({$column->getName()} IN (" . implode(", ", array_map(fn($value) => "'$value'", $column->getDefault())) . "))";
+            if ($column->isUnique()) {
+                $query .= " UNIQUE";
             }
 
             $query .= ", ";

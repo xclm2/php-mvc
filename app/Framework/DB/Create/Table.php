@@ -12,6 +12,7 @@ class Table extends Processor
 {
     protected string $table;
     protected array $columns = [];
+    protected array $index = [];
 
     public function __construct(string $table)
     {
@@ -33,6 +34,15 @@ class Table extends Processor
         return $this;
     }
 
+    public function addUniqueColumn(TableColumn $column) 
+    {
+        $column->unique();
+        return $this->addColumn($column);
+    }
+
+    /**
+     * @return TableColumn[]
+     */
     public function getColumns(): array
     {
         return $this->columns;
@@ -41,13 +51,13 @@ class Table extends Processor
     /**
      * Adds created_At and updated_At timestamp columns to the table.
      *
-     * @return void
+     * @return $this
      */
     public function timestamps()
     {
         $this->columns = array_merge($this->columns, [
-            new TableColumn('created_at', TableColumn\Type::TIMESTAMP, false, false, false, 'CURRENT_TIMESTAMP'),
-            new TableColumn('updated_at', TableColumn\Type::TIMESTAMP, false, false, false, 'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+            new TableColumn('created_at', TableColumn\Type::TIMESTAMP, false, false, false, false, 'CURRENT_TIMESTAMP'),
+            new TableColumn('updated_at', TableColumn\Type::TIMESTAMP, false, false, false, false, 'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
         ]);
 
         return $this;

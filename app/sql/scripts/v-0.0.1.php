@@ -5,8 +5,8 @@ use App\Framework\DB\Table\Column;
 use App\Framework\DB\Table\Column\Type;
 
 $table = new Table('db_version');
-$table->addColumn(new Column('id', Type::INT, false, true, true))
-      ->addColumn(new Column('version', 'VARCHAR(255)'))
+$table->addColumn(new Column('id', Type::INT, 11, false, true, true))
+      ->addColumn(new Column('version', Type::VARCHAR, 255))
       ->timestamps();
 
 $table->create($table);

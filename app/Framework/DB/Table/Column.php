@@ -5,9 +5,12 @@ use App\Framework\DB\Table\Column\Type;
 
 class Column
 {
+    protected bool $unique = false;
+
     public function __construct(
         protected string $name,
         protected string $type,
+        protected mixed $length = null,
         protected bool $nullable = true,
         protected bool $primaryKey = false,
         protected bool $autoIncrement = false,
@@ -44,9 +47,19 @@ class Column
         return $this->default;
     }
 
-    public function enum(string ...$values): self
+    public function getLength()
     {
-        $this->type = "ENUM('" . implode("', '", $values) . "')";
+        return $this->length;
+    }
+
+    public function isUnique()
+    {
+        return $this->unique;
+    }
+
+    public function unique()
+    {
+        $this->unique = true;
         return $this;
     }
 }
