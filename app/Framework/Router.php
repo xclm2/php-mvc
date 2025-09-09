@@ -5,30 +5,106 @@ namespace App\Framework;
 
 use Exception;
 
+/**
+ * Router Class
+ * 
+ * Handles HTTP routing and static file serving for the application.
+ * Supports GET, POST, PUT, and DELETE HTTP methods and manages route matching
+ * with corresponding controller actions.
+ */
 class Router
 {
-    private const STYLE_PATH = '/public';
+    /**
+     * @var string Directory path for static files
+     */
+    private const PUBLIC_PATH = '/public';
+
+    /**
+     * @var array Stores registered routes with their HTTP methods and controllers
+     */
     private array $_routes = [];
 
-    public function add(string $path, string $controller, array $params = [])
+    /**
+     * Registers a new route with the specified HTTP method
+     *
+     * @param string $path       The URL path to match
+     * @param string $controller The controller in format 'ControllerClass@methodName'
+     * @param string $method     The HTTP method (GET, POST, PUT, DELETE)
+     * @throws Exception If HTTP method is not supported
+     */
+    public function add(string $path, string $controller, string $method = 'GET')
     {
-        $this->_routes[$path] = [
+        // Convert method to uppercase for consistency
+        $method = strtoupper($method);
+        if (!in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
+            throw new Exception("Unsupported HTTP method: {$method}");
+        }
+
+        $this->_routes[$method][$path] = [
             'controller' => $controller, 
-            'params' => $params
+            'method' => $method
         ];
     }
 
-    public function match ($path) 
+    /**
+     * Registers a GET route
+     *
+     * @param string $path       The URL path to match
+     * @param string $controller The controller in format 'ControllerClass@methodName'
+     */
+    public function get(string $path, string $controller)
+    {
+        $this->add($path, $controller, 'GET');
+    }
+
+    /**
+     * Registers a POST route
+     *
+     * @param string $path       The URL path to match
+     * @param string $controller The controller in format 'ControllerClass@methodName'
+     */
+    public function post(string $path, string $controller)
+    {
+        $this->add($path, $controller, 'POST');
+    }
+
+    /**
+     * Matches the current request path to registered routes
+     * Also handles static file serving from public directory
+     *
+     * @param string $path    The current request path
+     * @param mixed  $request Optional request object to pass to controllers
+     */
+    public function match ($path, $request = null) 
     {
         $this->_readStyles($path);
 
-        if (array_key_exists($path, $this->_routes)) {
-            [$controller, $method] = $this->_extractControllerMethod($this->_routes[$path]['controller']);
-            $controller->$method();
+        // Get current request method
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        if (isset($this->_routes[$requestMethod][$path])) {
+            [$controller, $method] = $this->_extractControllerMethod(
+                $this->_routes[$requestMethod][$path]['controller']
+            );
+
+            $controller->$method($request);
             exit;
         }
+        
+
+        // Route not found
+        http_response_code(404);
+        echo "404 Not Found: Route {$path} not found for {$requestMethod} method.";
+        exit;
     }
 
+    /**
+     * Extracts the controller class and method from the route definition
+     *
+     * @param string $controller The controller in format 'ControllerClass@methodName'
+     * @return array An array containing the controller instance and method name
+     * @throws Exception If the controller or method does not exist
+     */
     protected function _extractControllerMethod($controller)
     {
         $parts = explode('@', $controller);
@@ -48,9 +124,14 @@ class Router
         return [$controller, $method];
     }
 
+    /**
+     * Reads and serves static files from the public directory
+     *
+     * @param string $path The requested file path
+     */
     protected function _readStyles($path)
     {
-        if (str_starts_with($path, self::STYLE_PATH)) {
+        if (str_starts_with($path, self::PUBLIC_PATH)) {
             $file = __ROOT__ . $path;
             if (file_exists($file) && is_readable($file)) {
                 
@@ -65,6 +146,12 @@ class Router
         }
     }
 
+    /**
+     * Determines the MIME type of a file based on its extension
+     *
+     * @param string $file The file path
+     * @return string The MIME type of the file
+     */
     private function _getMimeType($file)
     {
         $mimeType = mime_content_type($file);

@@ -1,6 +1,8 @@
 <?php
 namespace App\Framework;
 
+use App\Framework\Request;
+
 class Dispatcher
 {
     public function __construct(
@@ -12,6 +14,6 @@ class Dispatcher
         $request = $_SERVER['REQUEST_URI'] ?? '/';
         $path = parse_url($request, PHP_URL_PATH);
         
-        $this->_router->match($path);
+        $this->_router->match($path, new Request());
     }
 }
