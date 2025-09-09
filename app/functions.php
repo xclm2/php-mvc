@@ -12,5 +12,5 @@ function view($view, $data = [])
 }
 
 function asset($path) {
-    return '/public/styles/' . ltrim($path, '/');
+    return '/public/' . ltrim($path, '/');
 }
