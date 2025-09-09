@@ -35,5 +35,10 @@ abstract class Model extends DB
     {
         return $this->data[$name] ?? null;
     }
+
+    public function getData()
+    {
+        return $this->data;
+    }
     
 }
