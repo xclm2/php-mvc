@@ -1,7 +1,9 @@
 <?php 
 namespace App\Framework;
 
-abstract class Model extends DB
+use App\Framework\DB;
+
+abstract class Model
 {
     protected $table;
     protected $primaryKey = 'id';
@@ -9,14 +11,13 @@ abstract class Model extends DB
 
     public function __construct($id = null)
     {
-        parent::__construct();
         if ($id) { $this->load($id); }
     }
 
     public function load($id)
     {
         $query = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = :id";
-        $stmt = $this->prepare($query);
+        $stmt = $this->db()->prepare($query);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
         
@@ -24,6 +25,11 @@ abstract class Model extends DB
         if ($result) {
             $this->data = (array) $result;
         }
+    }
+
+    protected function db()
+    {
+        return DB::getInstance();
     }
 
     public function __set($name, $value)
