@@ -34,6 +34,12 @@ class Cache
         return self::_getInstance()->_cache->get($key);
     }
 
+    public static function reset(string $key, mixed $value, int $expiration)
+    {
+        self::delete($key);
+        return self::set($key, $value, $expiration);
+    }
+
     public static function set(string $key, mixed $value, int $expiration)
     {
         return self::_getInstance()->_cache->set($key, $value, $expiration);
