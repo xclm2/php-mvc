@@ -11,6 +11,7 @@ A lightweight MVC framework built with PHP that includes database integration, e
 - Bootstrap UI integration
 - Monolog-based logging
 - PSR-4 autoloading
+- Supports Memcached
 
 ## Project Structure
 ```
