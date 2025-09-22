@@ -1,5 +1,5 @@
 <?php
-namespace App\Framework;
+namespace App\Framework\Facade;
 
 use App\Framework\Cache\CacheManager;
 use App\Framework\Cache\Service\MemcachedService;

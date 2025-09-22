@@ -2,7 +2,7 @@
 namespace App\Framework;
 
 use App\Framework\DB;
-use App\Framework\Cache;
+use App\Framework\Facade\Cache;
 use PDO;
 
 abstract class Model
