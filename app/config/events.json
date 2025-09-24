@@ -1,1 +1,8 @@
-{}
+{
+    "test_event": [
+        {
+            "class": "App\\Listener\\TestListener",
+            "method": "test"
+        }
+    ]
+}
