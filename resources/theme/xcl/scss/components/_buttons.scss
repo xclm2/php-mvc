@@ -1,0 +1,18 @@
+@use '../variables/variables';
+.btn {
+    padding: variables.$spc-xs;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: 300ms;
+
+    &.btn-primary {
+        background-color: variables.$dark-slate-gray;
+        color: variables.$off-white;
+        
+        &:hover {
+            background-color: variables.$ash-gray;
+            box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@use '../variables/variables';
+
+.card {
+    background-color: #fff;
+    border-radius: variables.$rounded;
+    box-shadow: variables.$shadow-sm;
+    padding: variables.$spc-md;
+    margin-bottom: variables.$spc-lg;
+    transition: 300ms;
+
+    &:hover {
+        box-shadow: variables.$shadow-md;
+        transform: translateY(-2px);
+    }
+}
+
+.card-header {
+    border-bottom: 1px solid variables.$ash-gray;
+    margin-bottom: variables.$spc-md;
+    padding-bottom: variables.$spc-sm;
+}

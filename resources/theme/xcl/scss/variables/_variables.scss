@@ -1,0 +1,31 @@
+// Core Colors
+$charcoal-black: #1C1C1C;   // main background
+$dark-slate-gray: #2E2E2E;  // secondary background / cards
+$ash-gray: #4B4B4B;         // borders, dividers
+$smoke-gray: #6E6E6E;       // secondary text
+$silver-mist: #B0B0B0;      // disabled states, low contrast text
+
+// Accent Colors
+$steel-blue: #4682B4;       // primary buttons/links
+$teal-glow: #00BFA6;        // success, accent highlights
+$amber-glow: #FFB300;       // warnings, emphasis
+$crimson-red: #D72638;      // errors or destructive actions
+
+// Neutral Text
+$off-white: #F5F5F5;        // primary text on dark
+$soft-white: #E8E8E8;       // secondary text on dark
+
+
+// Shadow
+$shadow-sm: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+$shadow-md: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+
+// Spacing
+$spc-lg: 30px;
+$spc-xl: calc($spc-lg * 2);
+$spc-md: calc($spc-lg / 2);
+$spc-sm: 10px;
+$spc-xs: 5px;
+
+// Border
+$rounded: 3px;

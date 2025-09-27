@@ -77,7 +77,8 @@ cp .env.sample .env
 ```bash
 php -S localhost:8000 index.php
 ```
-
+5. npm install -g sass
+6. npm install sass nodemon --save-dev
 The framework uses modern PHP practices like:
 - Namespace usage
 - PDO for database operations

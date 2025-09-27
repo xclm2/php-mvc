@@ -1,0 +1,16 @@
+@use '../variables/variables';
+
+input {
+    border-radius: 3px;
+    border: 1px solid variables.$dark-slate-gray;
+    transition: 300ms;
+    padding: variables.$spc-xs;
+
+    &:focus-visible {
+        border-color: variables.$ash-gray;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
