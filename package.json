@@ -4,14 +4,16 @@
   "scripts": {
     "build-css": "sass --no-source-map resources/theme/xcl/scss/main.scss public/theme/xcl/css/main.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
-    "dev": "npm run watch-css"
+    "dev": "npm run watch-css & npx vite "
   },
   "dependencies": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
     "nodemon": "^3.1.10",
-    "sass": "^1.93.2"
+    "sass": "^1.93.2",
+    "vite": "^7.1.9"
   }
 }

@@ -1,14 +1,15 @@
-<?php require 'Partials/head.php' ?>
-<h3 class="display-1">
-    Fancy display heading
-    <small class="text-body-secondary">With faded secondary text</small>
-</h3>
-<div class="card">
-    <div class="card-header">
-        <h1>Featured</h1>
-    </div>
-    <input type="text" value="" placeholder="Note"/>
-<button class="btn btn-primary">Submit</button>
-
-</div>
-<?php require 'Partials/footer.php' ?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><?= env('APP_NAME') ?><?= isset($data['title']) ? ' / ' . $data['title'] : ''?></title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <?php new App\Theme\Main()->loadAssets() ?>
+    </head>
+<body>
+<div id="app"></div>
+</html>

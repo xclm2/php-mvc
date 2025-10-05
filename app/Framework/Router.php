@@ -158,7 +158,7 @@ class Router
         $ext = pathinfo($file, PATHINFO_EXTENSION);
         if ($ext === 'css') {
             $mimeType = 'text/css';
-        } elseif ($ext === 'js') {
+        } elseif ($ext === 'js' || $ext === 'jsx') {
             $mimeType = 'application/javascript';
         } elseif ($ext === 'png') {
             $mimeType = 'image/png';
