@@ -35,7 +35,7 @@ final class Assets
      */
     public function load()
     {
-        if (env('VITE_DEV')) {
+        if ($this->_isViteServerRunning()) {
             // Dev mode: load from Vite dev server
             echo $this->_script($this->_viteServer . '/@vite/client') . PHP_EOL;
             echo $this->_script($this->_viteServer . $this->entry) . PHP_EOL;
@@ -96,5 +96,23 @@ final class Assets
     private function _script(string $src, bool $isModule = true): string
     {
         return '<script type="' . ($isModule ? 'module' : 'text/javascript') . '" src="' . $src . '"></script>';
+    }
+
+    /**
+     * Checks if the Vite development server is running
+     *
+     * @return bool True if the Vite server is running, false otherwise
+     */
+    private function _isViteServerRunning(): bool
+    {
+        $ch = curl_init($this->_viteServer . '/@vite/client');
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return $httpCode === 200;
     }
 }
