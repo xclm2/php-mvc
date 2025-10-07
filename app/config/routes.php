@@ -1,12 +1,18 @@
 <?php
 
-use App\Controller\IndexController;
 use App\Framework\Dispatcher;
 use App\Framework\Router;
 
-$router = new Router();
-$router->add('/', 'App\Controller\IndexController@index');
+$web = new App\Framework\Router\Web();
+$web->add('/', 'App\Controller\IndexController@index');
+
+$api = new App\Framework\Router\Api();
+$api->add('/api/user/', 'App\Controller\Api\User@getUser');
 
 
-$dispatcher = new Dispatcher($router);
+
+$dispatcher = new Dispatcher($web);
+$dispatcher->handle();
+
+$dispatcher = new Dispatcher($api);
 $dispatcher->handle();

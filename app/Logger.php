@@ -24,7 +24,7 @@ class Logger {
         return self::$logger;
     }
 
-    public static function debug( $message) 
+    public static function debug($message) 
     {
         self::getInstance()->log(Level::Debug, $message);
     }
@@ -36,6 +36,10 @@ class Logger {
 
     private static function getLogFile()
     {
+        if (! is_dir(self::LOG_DIR)) {
+            mkdir(self::LOG_DIR, 0775, true);
+        }
+
         return self::LOG_DIR . 'app.log';
     }
 

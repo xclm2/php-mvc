@@ -1,0 +1,63 @@
+@use '../variables/variables';
+nav {
+    background-color: #fff;
+    padding: variables.$spc-sm;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: variables.$spc-sm;
+
+        li {
+            padding: variables.$spc-md;
+            cursor: pointer;
+            position: inherit;
+            overflow: hidden;
+            position: relative; /* Essential for positioning pseudo-elements */
+            overflow: hidden; 
+            transition: width 300ms ease-out; 
+
+            &.active {
+                border-bottom: 2px solid variables.$steel-blue;
+            }
+
+            &:not(.active)::before {
+                content: "";
+                position: absolute;
+                height: 100%;
+                left: 0;
+                bottom: 0;
+                border-bottom: 2px solid variables.$steel-blue;
+                transition: width 300ms ease-in-out; 
+                width: 0;
+                pointer-events: none;
+            }
+
+            &:hover::before {
+                width: 100%; 
+            }
+
+            &:hover > a {
+                color: variables.$steel-blue;
+            }
+        }
+    }
+
+    a {
+        color: variables.$dark-slate-gray;
+
+        text-decoration: none;
+        text-align: center;
+    }
+}
+
+@keyframes activeNav {
+    0% {
+        width: 0px;
+    }
+    100% {
+        width: fit-content;
+    }
+}

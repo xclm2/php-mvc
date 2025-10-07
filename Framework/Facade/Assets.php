@@ -23,9 +23,9 @@ final class Assets
                 $this->theme = "resources/theme/$theme/scss/main.scss";
             }
         },
-        protected string $entry = '/resources/view/app.jsx'
+        protected string $entry = '/resources/view/App.jsx'
     ) {
-        $this->_viteServer = 'http://' . env('VITE_HOST', 'localhost') . ':' . env('VITE_PORT', '5173');
+        $this->_viteServer = 'http://' . $_SERVER['HTTP_HOST'] . ':' . env('VITE_PORT', '5173');
     }
 
     /**
@@ -37,6 +37,7 @@ final class Assets
     {
         if ($this->_isViteServerRunning()) {
             // Dev mode: load from Vite dev server
+            echo $this->_viteServerScript() . PHP_EOL;
             echo $this->_script($this->_viteServer . '/@vite/client') . PHP_EOL;
             echo $this->_script($this->_viteServer . $this->entry) . PHP_EOL;
             return;
@@ -114,5 +115,16 @@ final class Assets
         curl_close($ch);
 
         return $httpCode === 200;
+    }
+
+    private function _viteServerScript(): string
+    {
+        return '<script type="module">
+            import RefreshRuntime from "http://'.$_SERVER['HTTP_HOST'] . ':' . env('VITE_PORT', '5173') . '/@react-refresh";
+            RefreshRuntime.injectIntoGlobalHook(window);
+            window.$RefreshReg$ = () => {};
+            window.$RefreshSig$ = () => (type) => type;
+            window.__vite_plugin_react_preamble_installed__ = true;
+        </script>';
     }
 }

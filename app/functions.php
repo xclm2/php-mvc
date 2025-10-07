@@ -20,6 +20,12 @@ function env($key, $default = null)
  */
 function view($view, $data = [])
 {
+    if (env('FRONTEND_MODE', 'php') === 'react') {
+        // In React mode, serve the main React app
+        require __ROOT__ . '/app/View/index.php';
+        exit;
+    }
+
     extract($data);
     require __ROOT__ . "/app/View/{$view}.php";
 }

@@ -12,7 +12,7 @@ use Exception;
  * Supports GET, POST, PUT, and DELETE HTTP methods and manages route matching
  * with corresponding controller actions.
  */
-class Router
+abstract class Router
 {
     /**
      * @var string Directory path for static files
@@ -22,7 +22,7 @@ class Router
     /**
      * @var array Stores registered routes with their HTTP methods and controllers
      */
-    private array $_routes = [];
+    protected array $_routes = [];
 
     /**
      * Registers a new route with the specified HTTP method
@@ -40,6 +40,7 @@ class Router
             throw new Exception("Unsupported HTTP method: {$method}");
         }
 
+        $path = rtrim($path, '/');
         $this->_routes[$method][$path] = [
             'controller' => $controller, 
             'method' => $method
@@ -75,28 +76,7 @@ class Router
      * @param string $path    The current request path
      * @param mixed  $request Optional request object to pass to controllers
      */
-    public function match ($path, $request = null) 
-    {
-        $this->_readStyles($path);
-
-        // Get current request method
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
-
-        if (isset($this->_routes[$requestMethod][$path])) {
-            [$controller, $method] = $this->_extractControllerMethod(
-                $this->_routes[$requestMethod][$path]['controller']
-            );
-
-            $controller->$method($request);
-            exit;
-        }
-        
-
-        // Route not found
-        http_response_code(404);
-        echo "404 Not Found: Route {$path} not found for {$requestMethod} method.";
-        exit;
-    }
+    abstract public function match ($path, $request = null);
 
     /**
      * Extracts the controller class and method from the route definition

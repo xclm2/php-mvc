@@ -58,4 +58,9 @@ class Request
         $this->data = $_POST;
         return $this;
     }
+
+    public function toArray()
+    {
+        return $this->data;
+    }
 }
