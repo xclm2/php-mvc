@@ -1,98 +1,137 @@
-# PHP MVC Framework
 
-A lightweight MVC framework built with PHP that includes database integration, environment configuration, and routing capabilities.
+# XMVC Framework
+
+A modern full-stack MVC framework combining PHP backend with React frontend, featuring robust caching, database management, and modern development tooling.
 
 ## Features
 
-- MVC (Model-View-Controller) architecture
-- PDO database integration
-- Environment configuration management
-- Dynamic routing system
-- Bootstrap UI integration
-- Monolog-based logging
-- PSR-4 autoloading
-- Supports Memcached
+### Backend
+- Modern MVC (Model-View-Controller) architecture
+- Advanced routing system with API and Web router support
+- Database management with migration support
+- Event system with listeners
+- Robust caching system with Memcached support
+- PSR-4 compliant autoloading
+- Comprehensive logging with Monolog
+- RESTful API support
+- Facade pattern for common services
+
+### Frontend
+- React-based UI components
+- Vite for rapid development and optimized builds
+- Component-based architecture
+- SCSS styling support
+- Custom theme system
+- Font asset management
 
 ## Project Structure
 ```
 project-root/
-├── app/
-│   ├── Controller/        # Controller classes
-│   ├── Framework/        # Core framework classes
-│   ├── Model/           # Model classes
-│   ├── View/            # View templates
-│   ├── config/          # Configuration files
-│   ├── bootstrap.php    # Application bootstrap
-│   └── functions.php    # Helper functions
-├── log/                 # Log files
-├── public/              # Public assets
-│   ├── css/            # CSS files
-│   ├── js/             # JavaScript files
-│   └── images/         # Image assets
-├── vendor/             # Composer dependencies
-├── .env                # Environment variables
-├── .env.sample         # Environment template
-├── composer.json       # Composer configuration
-└── index.php          # Application entry point
+├── app/                    # Application core
+│   ├── Controller/         # Controllers (Web & API)
+│   ├── Model/             # Data models
+│   ├── View/              # View templates
+│   ├── Listener/          # Event listeners
+│   ├── Theme/             # Theme definitions
+│   ├── config/            # Configuration files
+│   ├── sql/              # Database migrations
+│   ├── bootstrap.php     # Application bootstrap
+│   └── functions.php     # Helper functions
+├── Framework/             # Core framework
+│   ├── Api/              # API handling
+│   ├── Cache/            # Caching system
+│   ├── DB/               # Database management
+│   ├── Event/            # Event system
+│   ├── Router/           # Routing system
+│   └── Facade/           # Service facades
+├── resources/             # Frontend resources
+│   ├── assets/           # Static assets
+│   ├── theme/            # Theme assets
+│   └── view/             # React components
+├── public/               # Public assets
+├── vendor/               # Composer dependencies
+├── log/                  # Application logs
+├── composer.json         # PHP dependencies
+├── package.json          # Node.js dependencies
+├── vite.config.js        # Vite configuration
+└── index.php            # Application entry point
 ```
 
-## Environment Configuration
-Required environment variables:
+## Requirements
 
-APP_NAME: Application name
-LOG_FILE: Log file name
-DB_CONNECTION: Database type
-DB_HOST: Database host
-DB_PORT: Database port
-DB_DATABASE: Database name
-DB_USERNAME: Database username
-DB_PASSWORD: Database password
-
-## Key Components
-Router: Handles URL routing and dispatching
-Model: Base class for database operations
-Logger: Monolog-based logging implementation
-Environment Manager: Handles .env file configuration
-
-
-## Dependencies
-PHP 8.0+
-MySQL/MariaDB
-Monolog for logging
-Composer for dependency management
-
+- PHP 8.4+
+- Node.js 16+
+- Memcached
+- MySQL/MariaDB
+- Composer
 
 ## Setup
 
-1. Clone the repository
-2. Install dependencies:
+1. Clone the repository:
+```bash
+git clone https://github.com/xclm2/php-mvc.git
+cd php-mvc
+```
+
+2. Install PHP dependencies:
 ```bash
 composer install
 ```
-3. Copy .env.sample to .env and configure your environment variables:
+
+3. Install Node.js dependencies:
 ```bash
-cp .env.sample .env
+npm install
 ```
-4. Start the PHP server
+
+4. Configure your environment:
 ```bash
-php -S localhost:8000 index.php
+cp app/config/env.php.example app/config/env.php
+# Edit env.php with your configuration
 ```
-5. npm install -g sass
-6. npm install sass nodemon --save-dev
-The framework uses modern PHP practices like:
-- Namespace usage
-- PDO for database operations
-- Environment configuration
-- PSR-4 autoloading
-- Composer dependency management
 
-Feel free to modify the content or add additional sections as needed.
+5. Start the development server:
+```bash
+# Terminal 1: PHP server
+php -S localhost:8000
 
-The framework uses modern PHP practices like:
-- Namespace usage
-- PDO for database operations
-- Environment configuration
-- PSR-4 autoloading
-- Composer dependency management
+# Terminal 2: Vite dev server
+npm run dev
+```
 
-Feel free to modify the content or add additional sections as needed.
+## Development
+
+- Backend code follows PSR-4 autoloading standards
+- Frontend code uses React components in `resources/view`
+- Use `npm run build` for production builds
+- Database migrations are in `app/sql/scripts`
+
+## Testing
+
+```bash
+# Run PHP tests
+./vendor/bin/phpunit
+
+# Run frontend tests (if configured)
+npm test
+```
+
+## Key Components
+
+- **Router**: Advanced routing with API and Web support
+- **Model**: Base class for database operations with migration support
+- **Cache**: Flexible caching system with Memcached integration
+- **Event System**: Publish/subscribe pattern for application events
+- **Theme System**: Customizable theming support
+- **Asset Management**: Vite-powered asset compilation and serving
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+[MIT License](LICENSE)
