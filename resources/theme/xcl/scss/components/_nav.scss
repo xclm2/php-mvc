@@ -11,7 +11,7 @@ nav {
         gap: variables.$spc-sm;
 
         li {
-            padding: variables.$spc-md;
+            padding: variables.$spc-md 0;
             cursor: pointer;
             position: inherit;
             overflow: hidden;
@@ -50,6 +50,7 @@ nav {
 
         text-decoration: none;
         text-align: center;
+        padding: variables.$spc-md;
     }
 }
 
