@@ -1,0 +1,57 @@
+services:
+  # PHP + Apache Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: xmvc-app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    networks:
+      - xmvc-network
+
+  # MariaDB Service
+  db:
+    image: mariadb:10.6
+    container_name: xmvc-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: xmvc
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: xmvc_user
+      MYSQL_PASSWORD: user_password
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - xmvc-network
+
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: xmvc-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: xmvc
+    networks:
+      - xmvc-network
+    depends_on:
+      - db
+
+networks:
+  xmvc-network:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local
